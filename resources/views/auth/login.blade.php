@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Belajar Bahasa Inggris</title>
+    <title>Login - {{config('app.name')}}</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
 </head>
@@ -17,10 +17,9 @@
                 <div class="image-overlay"></div>
                 <div class="panel-content">
                     <div class="panel-brand d-flex align-items-center gap-2 mb-auto">
-                        <div class="brand-icon">BI</div>
+                        <div class="brand-icon">E</div>
                         <div>
-                            <p class="mb-0 fw-semibold text-uppercase small text-white-50">Belajar Inggris</p>
-                            <h5 class="mb-0 text-white">Dashboard</h5>
+                            <p class="mb-0 fw-semibold text-uppercase small text-white-50">{{config ('app.name')}}</p>
                         </div>
                     </div>
                     <div class="panel-text mt-auto">
