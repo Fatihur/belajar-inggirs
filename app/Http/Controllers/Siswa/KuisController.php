@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kuis;
+use App\Models\Materi;
 use App\Models\PercobaanKuis;
 use App\Models\JawabanSiswa;
 use Illuminate\Http\Request;
