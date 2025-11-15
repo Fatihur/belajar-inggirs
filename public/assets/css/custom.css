@@ -1,0 +1,115 @@
+/* Custom CSS for Rich Text Content */
+
+.content-html {
+    line-height: 1.8;
+}
+
+.content-html h1,
+.content-html h2,
+.content-html h3,
+.content-html h4,
+.content-html h5,
+.content-html h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.content-html h1 { font-size: 2rem; }
+.content-html h2 { font-size: 1.75rem; }
+.content-html h3 { font-size: 1.5rem; }
+.content-html h4 { font-size: 1.25rem; }
+.content-html h5 { font-size: 1.1rem; }
+.content-html h6 { font-size: 1rem; }
+
+.content-html p {
+    margin-bottom: 1rem;
+}
+
+.content-html ul,
+.content-html ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.content-html li {
+    margin-bottom: 0.5rem;
+}
+
+.content-html strong,
+.content-html b {
+    font-weight: 600;
+}
+
+.content-html em,
+.content-html i {
+    font-style: italic;
+}
+
+.content-html a {
+    color: #5d87ff;
+    text-decoration: underline;
+}
+
+.content-html a:hover {
+    color: #4570ea;
+}
+
+.content-html img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.content-html blockquote {
+    border-left: 4px solid #5d87ff;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #666;
+}
+
+.content-html code {
+    background-color: #f5f5f5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.content-html pre {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.content-html pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.content-html table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.content-html table th,
+.content-html table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.content-html table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.content-html hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
