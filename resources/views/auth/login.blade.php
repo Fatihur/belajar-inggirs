@@ -82,14 +82,7 @@
                         </button>
                     </form>
 
-                    <div class="alert alert-info">
-                        <strong>Akun Demo:</strong><br>
-                        <small>
-                            <strong>Super Admin:</strong> admin@belajaringgris.com / admin123<br>
-                            <strong>Guru:</strong> guru@belajaringgris.com / guru123<br>
-                            <strong>Siswa:</strong> siswa@belajaringgris.com / siswa123
-                        </small>
-                    </div>
+                    
                     <p class="text-center text-muted small mb-0">Belum punya akses? Hubungi administrator sekolah Anda.</p>
                 </div>
             </div>
