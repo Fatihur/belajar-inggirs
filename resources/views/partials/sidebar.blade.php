@@ -63,6 +63,12 @@
               <span class="hide-menu">Kelola Kuis</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('guru.nilai.index') }}" aria-expanded="false">
+              <span><i class="ti ti-report-analytics"></i></span>
+              <span class="hide-menu">Nilai Siswa</span>
+            </a>
+          </li>
 
         @else
           <!-- Siswa Menu -->

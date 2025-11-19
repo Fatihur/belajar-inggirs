@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdmin\SiswaController;
 use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
 use App\Http\Controllers\Guru\MateriController as GuruMateri;
 use App\Http\Controllers\Guru\KuisController as GuruKuis;
+use App\Http\Controllers\Guru\NilaiController as GuruNilai;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateri;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuis;
@@ -56,6 +57,12 @@ Route::prefix('guru')->name('guru.')->middleware(['auth', 'role:guru'])->group(f
     Route::resource('kuis', GuruKuis::class);
     Route::post('kuis/{id}/soal', [GuruKuis::class, 'storeSoal'])->name('kuis.soal.store');
     Route::delete('kuis/{kuisId}/soal/{soalId}', [GuruKuis::class, 'destroySoal'])->name('kuis.soal.destroy');
+    
+    // Nilai Siswa
+    Route::get('/nilai', [GuruNilai::class, 'index'])->name('nilai.index');
+    Route::get('/nilai/siswa/{siswaId}', [GuruNilai::class, 'show'])->name('nilai.siswa');
+    Route::get('/nilai/kuis/{kuisId}', [GuruNilai::class, 'perKuis'])->name('nilai.kuis');
+    Route::get('/nilai/percobaan/{percobaanId}', [GuruNilai::class, 'detailPercobaan'])->name('nilai.percobaan');
 });
 
 // Siswa Routes
