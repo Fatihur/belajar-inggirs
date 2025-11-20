@@ -15,7 +15,12 @@ class KuisController extends Controller
     public function index(Request $request)
     {
         $siswa = auth()->user();
-        $query = Kuis::where('aktif', true)->with('materi')->withCount('soal');
+        $kelasSiswa = $siswa->kelas;
+        
+        $query = Kuis::where('aktif', true)
+            ->where('kelas_target', $kelasSiswa)
+            ->with('materi')
+            ->withCount('soal');
 
         // Search
         if ($request->filled('search')) {

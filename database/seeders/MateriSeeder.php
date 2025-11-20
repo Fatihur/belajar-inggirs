@@ -11,10 +11,31 @@ class MateriSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ambil guru
-        $guru = User::whereHas('peran', function($q) {
+        // Ambil guru kelas 7 dan 8
+        $guruKelas7 = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'guru');
-        })->first();
+        })->where('kelas_mengajar', '7')->first();
+
+        $guruKelas8 = User::whereHas('peran', function($q) {
+            $q->where('nama_peran', 'guru');
+        })->where('kelas_mengajar', '8')->first();
+
+        if (!$guruKelas7 || !$guruKelas8) {
+            $this->command->warn('⚠️  Guru belum ada. Jalankan GuruSeeder terlebih dahulu.');
+            return;
+        }
+
+        // === MATERI UNTUK KELAS 7 ===
+        $this->buatMateriKelas7($guruKelas7);
+
+        // === MATERI UNTUK KELAS 8 ===
+        $this->buatMateriKelas8($guruKelas8);
+
+        $this->command->info('✓ Materi untuk kelas 7 dan 8 berhasil ditambahkan');
+    }
+
+    private function buatMateriKelas7($guru)
+    {
 
         // Materi Grammar 1: Simple Present Tense
         $grammar1 = Materi::create([
@@ -25,7 +46,8 @@ class MateriSeeder extends Seeder
             'video_url' => 'https://www.youtube.com/embed/DRJf-wNrALs',
             'dibuat_oleh' => $guru->id,
             'urutan' => 1,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
 
         // Materi Grammar 2: Present Continuous Tense
@@ -37,7 +59,8 @@ class MateriSeeder extends Seeder
             'video_url' => 'https://www.youtube.com/embed/8NP5ghXqJYo',
             'dibuat_oleh' => $guru->id,
             'urutan' => 2,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
 
         // Materi Vocabulary 1: Daily Activities
@@ -47,7 +70,8 @@ class MateriSeeder extends Seeder
             'deskripsi' => 'Kosakata tentang kegiatan sehari-hari',
             'dibuat_oleh' => $guru->id,
             'urutan' => 3,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
 
         // Kosakata untuk Daily Activities
@@ -82,7 +106,8 @@ class MateriSeeder extends Seeder
             'deskripsi' => 'Kosakata tentang anggota keluarga',
             'dibuat_oleh' => $guru->id,
             'urutan' => 4,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
 
         // Kosakata untuk Family Members
@@ -117,7 +142,8 @@ class MateriSeeder extends Seeder
             'deskripsi' => 'Kosakata tentang warna-warna',
             'dibuat_oleh' => $guru->id,
             'urutan' => 5,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
 
         // Kosakata untuk Colors
@@ -154,7 +180,107 @@ class MateriSeeder extends Seeder
             'video_url' => 'https://www.youtube.com/embed/Y_JtkwYudyg',
             'dibuat_oleh' => $guru->id,
             'urutan' => 6,
-            'aktif' => true
+            'aktif' => true,
+            'kelas_target' => '7'
         ]);
+    }
+
+    private function buatMateriKelas8($guru)
+    {
+        // Materi Grammar 1: Present Perfect Tense
+        $grammar1 = Materi::create([
+            'judul' => 'Present Perfect Tense',
+            'jenis_materi' => 'grammar',
+            'deskripsi' => 'Memahami penggunaan Present Perfect Tense',
+            'konten' => "Present Perfect Tense digunakan untuk:\n\n1. Kejadian yang baru saja terjadi\nContoh: I have just finished my homework.\n\n2. Pengalaman hidup\nContoh: She has visited Bali three times.\n\n3. Kejadian yang dimulai di masa lalu dan masih berlanjut\nContoh: They have lived here for 10 years.\n\nRumus:\n(+) Subject + have/has + Verb3 + Object\n(-) Subject + have/has + not + Verb3 + Object\n(?) Have/Has + Subject + Verb3 + Object?",
+            'video_url' => 'https://www.youtube.com/embed/mVB1Hm0p8Qs',
+            'dibuat_oleh' => $guru->id,
+            'urutan' => 1,
+            'aktif' => true,
+            'kelas_target' => '8'
+        ]);
+
+        // Materi Grammar 2: Passive Voice
+        $grammar2 = Materi::create([
+            'judul' => 'Passive Voice',
+            'jenis_materi' => 'grammar',
+            'deskripsi' => 'Memahami kalimat pasif dalam bahasa Inggris',
+            'konten' => "Passive Voice digunakan ketika fokus pada objek yang dikenai aksi.\n\nRumus:\n(+) Subject + to be + Verb3 + by + Object\n(-) Subject + to be + not + Verb3 + by + Object\n(?) To be + Subject + Verb3 + by + Object?\n\nContoh:\nActive: She writes a letter.\nPassive: A letter is written by her.\n\nActive: They built this house.\nPassive: This house was built by them.",
+            'video_url' => 'https://www.youtube.com/embed/3HBvZpOKDtE',
+            'dibuat_oleh' => $guru->id,
+            'urutan' => 2,
+            'aktif' => true,
+            'kelas_target' => '8'
+        ]);
+
+        // Materi Vocabulary 1: Technology
+        $vocab1 = Materi::create([
+            'judul' => 'Technology (Teknologi)',
+            'jenis_materi' => 'vocabulary',
+            'deskripsi' => 'Kosakata tentang teknologi',
+            'dibuat_oleh' => $guru->id,
+            'urutan' => 3,
+            'aktif' => true,
+            'kelas_target' => '8'
+        ]);
+
+        $technology = [
+            ['computer', 'komputer', 'noun', 'I use a computer for my work.'],
+            ['smartphone', 'ponsel pintar', 'noun', 'My smartphone has many useful apps.'],
+            ['internet', 'internet', 'noun', 'The internet connects people worldwide.'],
+            ['application', 'aplikasi', 'noun', 'This application is very helpful.'],
+            ['website', 'situs web', 'noun', 'I visit this website every day.'],
+            ['download', 'mengunduh', 'verb', 'You can download the file here.'],
+            ['upload', 'mengunggah', 'verb', 'Please upload your photo.'],
+            ['software', 'perangkat lunak', 'noun', 'This software is easy to use.'],
+            ['hardware', 'perangkat keras', 'noun', 'The hardware needs to be upgraded.'],
+            ['keyboard', 'papan ketik', 'noun', 'The keyboard is not working.'],
+        ];
+
+        foreach ($technology as $index => $kata) {
+            Kosakata::create([
+                'materi_id' => $vocab1->id,
+                'kata_inggris' => $kata[0],
+                'kata_indonesia' => $kata[1],
+                'jenis_kata' => $kata[2],
+                'contoh_kalimat' => $kata[3],
+                'urutan' => $index
+            ]);
+        }
+
+        // Materi Vocabulary 2: Environment
+        $vocab2 = Materi::create([
+            'judul' => 'Environment (Lingkungan)',
+            'jenis_materi' => 'vocabulary',
+            'deskripsi' => 'Kosakata tentang lingkungan',
+            'dibuat_oleh' => $guru->id,
+            'urutan' => 4,
+            'aktif' => true,
+            'kelas_target' => '8'
+        ]);
+
+        $environment = [
+            ['pollution', 'polusi', 'noun', 'Air pollution is a serious problem.'],
+            ['recycle', 'mendaur ulang', 'verb', 'We should recycle plastic bottles.'],
+            ['environment', 'lingkungan', 'noun', 'We must protect our environment.'],
+            ['climate', 'iklim', 'noun', 'Climate change affects everyone.'],
+            ['forest', 'hutan', 'noun', 'The forest is home to many animals.'],
+            ['ocean', 'samudra', 'noun', 'The ocean covers most of Earth.'],
+            ['waste', 'sampah', 'noun', 'Please throw waste in the bin.'],
+            ['energy', 'energi', 'noun', 'Solar energy is renewable.'],
+            ['conservation', 'konservasi', 'noun', 'Wildlife conservation is important.'],
+            ['sustainable', 'berkelanjutan', 'adjective', 'We need sustainable development.'],
+        ];
+
+        foreach ($environment as $index => $kata) {
+            Kosakata::create([
+                'materi_id' => $vocab2->id,
+                'kata_inggris' => $kata[0],
+                'kata_indonesia' => $kata[1],
+                'jenis_kata' => $kata[2],
+                'contoh_kalimat' => $kata[3],
+                'urutan' => $index
+            ]);
+        }
     }
 }

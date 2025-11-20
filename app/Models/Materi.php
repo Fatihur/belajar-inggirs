@@ -17,7 +17,8 @@ class Materi extends Model
         'video_path',
         'dibuat_oleh',
         'urutan',
-        'aktif'
+        'aktif',
+        'kelas_target'
     ];
 
     protected $casts = [

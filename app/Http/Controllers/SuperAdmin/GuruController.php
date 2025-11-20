@@ -32,6 +32,7 @@ class GuruController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'nomor_induk' => 'required|string|unique:users,nomor_induk',
+            'kelas_mengajar' => 'required|in:7,8',
             'no_telepon' => 'nullable|string',
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'nullable|date',
@@ -44,6 +45,7 @@ class GuruController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak cocok',
             'nomor_induk.required' => 'NIP harus diisi',
             'nomor_induk.unique' => 'NIP sudah terdaftar',
+            'kelas_mengajar.required' => 'Kelas mengajar harus dipilih',
             'jenis_kelamin.required' => 'Jenis kelamin harus dipilih'
         ]);
 
@@ -55,6 +57,7 @@ class GuruController extends Controller
             'password' => Hash::make($request->password),
             'peran_id' => $peranGuru->id,
             'nomor_induk' => $request->nomor_induk,
+            'kelas_mengajar' => $request->kelas_mengajar,
             'no_telepon' => $request->no_telepon,
             'jenis_kelamin' => $request->jenis_kelamin,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -81,6 +84,7 @@ class GuruController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:6|confirmed',
             'nomor_induk' => 'required|string|unique:users,nomor_induk,' . $id,
+            'kelas_mengajar' => 'required|in:7,8',
             'no_telepon' => 'nullable|string',
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'nullable|date',
@@ -91,6 +95,7 @@ class GuruController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'nomor_induk' => $request->nomor_induk,
+            'kelas_mengajar' => $request->kelas_mengajar,
             'no_telepon' => $request->no_telepon,
             'jenis_kelamin' => $request->jenis_kelamin,
             'tanggal_lahir' => $request->tanggal_lahir,

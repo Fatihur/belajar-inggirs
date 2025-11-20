@@ -45,11 +45,19 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">NIP <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="nomor_induk" value="{{ old('nomor_induk', $guru->nomor_induk) }}" required>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Kelas Mengajar <span class="text-danger">*</span></label>
+                        <select class="form-select" name="kelas_mengajar" required>
+                            <option value="">Pilih Kelas</option>
+                            <option value="7" {{ old('kelas_mengajar', $guru->kelas_mengajar) == '7' ? 'selected' : '' }}>Kelas 7</option>
+                            <option value="8" {{ old('kelas_mengajar', $guru->kelas_mengajar) == '8' ? 'selected' : '' }}>Kelas 8</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">No. Telepon</label>
                         <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon', $guru->no_telepon) }}">
                     </div>

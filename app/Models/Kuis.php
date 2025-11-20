@@ -18,7 +18,8 @@ class Kuis extends Model
         'dibuat_oleh',
         'aktif',
         'acak_soal',
-        'tampilkan_jawaban'
+        'tampilkan_jawaban',
+        'kelas_target'
     ];
 
     protected $casts = [

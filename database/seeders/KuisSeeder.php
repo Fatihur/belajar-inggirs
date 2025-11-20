@@ -13,27 +13,49 @@ class KuisSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ambil guru dan materi
-        $guru = User::whereHas('peran', function($q) {
+        // Ambil guru kelas 7 dan 8
+        $guruKelas7 = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'guru');
-        })->first();
+        })->where('kelas_mengajar', '7')->first();
 
-        $materiSimplePresent = Materi::where('judul', 'Simple Present Tense')->first();
-        $materiDailyActivities = Materi::where('judul', 'Daily Activities (Kegiatan Sehari-hari)')->first();
-        $materiFamilyMembers = Materi::where('judul', 'Family Members (Anggota Keluarga)')->first();
+        $guruKelas8 = User::whereHas('peran', function($q) {
+            $q->where('nama_peran', 'guru');
+        })->where('kelas_mengajar', '8')->first();
+
+        if (!$guruKelas7 || !$guruKelas8) {
+            $this->command->warn('⚠️  Guru belum ada. Jalankan GuruSeeder terlebih dahulu.');
+            return;
+        }
+
+        // === KUIS UNTUK KELAS 7 ===
+        $this->buatKuisKelas7($guruKelas7);
+
+        // === KUIS UNTUK KELAS 8 ===
+        $this->buatKuisKelas8($guruKelas8);
+
+        $this->command->info('✓ Kuis untuk kelas 7 dan 8 berhasil ditambahkan');
+    }
+
+    private function buatKuisKelas7($guru)
+    {
+
+        $materiSimplePresent = Materi::where('judul', 'Simple Present Tense')->where('kelas_target', '7')->first();
+        $materiDailyActivities = Materi::where('judul', 'Daily Activities (Kegiatan Sehari-hari)')->where('kelas_target', '7')->first();
+        $materiFamilyMembers = Materi::where('judul', 'Family Members (Anggota Keluarga)')->where('kelas_target', '7')->first();
 
         // Kuis 1: Simple Present Tense
         $kuis1 = Kuis::create([
             'judul' => 'Quiz: Simple Present Tense',
             'deskripsi' => 'Uji pemahaman Anda tentang Simple Present Tense',
-            'materi_id' => $materiSimplePresent->id,
+            'materi_id' => $materiSimplePresent ? $materiSimplePresent->id : null,
             'durasi_menit' => 15,
             'nilai_minimal' => 70,
             'tingkat_kesulitan' => 'mudah',
             'dibuat_oleh' => $guru->id,
             'aktif' => true,
             'acak_soal' => true,
-            'tampilkan_jawaban' => true
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '7'
         ]);
 
         // Soal 1
@@ -108,14 +130,15 @@ class KuisSeeder extends Seeder
         $kuis2 = Kuis::create([
             'judul' => 'Quiz: Daily Activities Vocabulary',
             'deskripsi' => 'Uji pengetahuan kosakata kegiatan sehari-hari',
-            'materi_id' => $materiDailyActivities->id,
+            'materi_id' => $materiDailyActivities ? $materiDailyActivities->id : null,
             'durasi_menit' => 10,
             'nilai_minimal' => 70,
             'tingkat_kesulitan' => 'mudah',
             'dibuat_oleh' => $guru->id,
             'aktif' => true,
             'acak_soal' => true,
-            'tampilkan_jawaban' => true
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '7'
         ]);
 
         // Soal 1
@@ -162,14 +185,15 @@ class KuisSeeder extends Seeder
         $kuis3 = Kuis::create([
             'judul' => 'Quiz: Family Members',
             'deskripsi' => 'Uji pengetahuan tentang anggota keluarga',
-            'materi_id' => $materiFamilyMembers->id,
+            'materi_id' => $materiFamilyMembers ? $materiFamilyMembers->id : null,
             'durasi_menit' => 10,
             'nilai_minimal' => 70,
             'tingkat_kesulitan' => 'mudah',
             'dibuat_oleh' => $guru->id,
             'aktif' => true,
             'acak_soal' => false,
-            'tampilkan_jawaban' => true
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '7'
         ]);
 
         // Soal 1
@@ -223,7 +247,8 @@ class KuisSeeder extends Seeder
             'dibuat_oleh' => $guru->id,
             'aktif' => true,
             'acak_soal' => true,
-            'tampilkan_jawaban' => true
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '7'
         ]);
 
         // Soal 1
@@ -253,5 +278,140 @@ class KuisSeeder extends Seeder
         PilihanJawaban::create(['soal_id' => $soal13->id, 'teks_jawaban' => 'goes', 'jawaban_benar' => false, 'urutan' => 1]);
         PilihanJawaban::create(['soal_id' => $soal13->id, 'teks_jawaban' => 'went', 'jawaban_benar' => true, 'urutan' => 2]);
         PilihanJawaban::create(['soal_id' => $soal13->id, 'teks_jawaban' => 'going', 'jawaban_benar' => false, 'urutan' => 3]);
+    }
+
+    private function buatKuisKelas8($guru)
+    {
+        $materiPresentPerfect = Materi::where('judul', 'Present Perfect Tense')->where('kelas_target', '8')->first();
+        $materiTechnology = Materi::where('judul', 'Technology (Teknologi)')->where('kelas_target', '8')->first();
+
+        // Kuis 1: Present Perfect Tense
+        $kuis1 = Kuis::create([
+            'judul' => 'Quiz: Present Perfect Tense',
+            'deskripsi' => 'Uji pemahaman Present Perfect Tense',
+            'materi_id' => $materiPresentPerfect ? $materiPresentPerfect->id : null,
+            'durasi_menit' => 20,
+            'nilai_minimal' => 75,
+            'tingkat_kesulitan' => 'sedang',
+            'dibuat_oleh' => $guru->id,
+            'aktif' => true,
+            'acak_soal' => true,
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '8'
+        ]);
+
+        // Soal 1
+        $soal1 = SoalKuis::create([
+            'kuis_id' => $kuis1->id,
+            'pertanyaan' => 'I ... already ... my homework.',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 15,
+            'urutan' => 1
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal1->id, 'teks_jawaban' => 'have - finished', 'jawaban_benar' => true, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal1->id, 'teks_jawaban' => 'has - finished', 'jawaban_benar' => false, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal1->id, 'teks_jawaban' => 'am - finishing', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal1->id, 'teks_jawaban' => 'was - finished', 'jawaban_benar' => false, 'urutan' => 3]);
+
+        // Soal 2
+        $soal2 = SoalKuis::create([
+            'kuis_id' => $kuis1->id,
+            'pertanyaan' => 'She ... to Japan three times.',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 15,
+            'urutan' => 2
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal2->id, 'teks_jawaban' => 'have been', 'jawaban_benar' => false, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal2->id, 'teks_jawaban' => 'has been', 'jawaban_benar' => true, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal2->id, 'teks_jawaban' => 'was', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal2->id, 'teks_jawaban' => 'went', 'jawaban_benar' => false, 'urutan' => 3]);
+
+        // Kuis 2: Technology Vocabulary
+        $kuis2 = Kuis::create([
+            'judul' => 'Quiz: Technology Vocabulary',
+            'deskripsi' => 'Uji pengetahuan kosakata teknologi',
+            'materi_id' => $materiTechnology ? $materiTechnology->id : null,
+            'durasi_menit' => 15,
+            'nilai_minimal' => 70,
+            'tingkat_kesulitan' => 'sedang',
+            'dibuat_oleh' => $guru->id,
+            'aktif' => true,
+            'acak_soal' => true,
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '8'
+        ]);
+
+        // Soal 1
+        $soal3 = SoalKuis::create([
+            'kuis_id' => $kuis2->id,
+            'pertanyaan' => 'What is the meaning of "download"?',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 10,
+            'urutan' => 1
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal3->id, 'teks_jawaban' => 'mengunggah', 'jawaban_benar' => false, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal3->id, 'teks_jawaban' => 'mengunduh', 'jawaban_benar' => true, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal3->id, 'teks_jawaban' => 'menghapus', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal3->id, 'teks_jawaban' => 'menyimpan', 'jawaban_benar' => false, 'urutan' => 3]);
+
+        // Soal 2
+        $soal4 = SoalKuis::create([
+            'kuis_id' => $kuis2->id,
+            'pertanyaan' => 'Apa bahasa Inggris dari "perangkat keras"?',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 10,
+            'urutan' => 2
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal4->id, 'teks_jawaban' => 'software', 'jawaban_benar' => false, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal4->id, 'teks_jawaban' => 'hardware', 'jawaban_benar' => true, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal4->id, 'teks_jawaban' => 'application', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal4->id, 'teks_jawaban' => 'internet', 'jawaban_benar' => false, 'urutan' => 3]);
+
+        // Kuis 3: Passive Voice
+        $kuis3 = Kuis::create([
+            'judul' => 'Quiz: Passive Voice',
+            'deskripsi' => 'Uji pemahaman tentang kalimat pasif',
+            'materi_id' => null,
+            'durasi_menit' => 20,
+            'nilai_minimal' => 75,
+            'tingkat_kesulitan' => 'sulit',
+            'dibuat_oleh' => $guru->id,
+            'aktif' => true,
+            'acak_soal' => false,
+            'tampilkan_jawaban' => true,
+            'kelas_target' => '8'
+        ]);
+
+        // Soal 1
+        $soal5 = SoalKuis::create([
+            'kuis_id' => $kuis3->id,
+            'pertanyaan' => 'The letter ... by her yesterday.',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 20,
+            'urutan' => 1
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal5->id, 'teks_jawaban' => 'is written', 'jawaban_benar' => false, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal5->id, 'teks_jawaban' => 'was written', 'jawaban_benar' => true, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal5->id, 'teks_jawaban' => 'writes', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal5->id, 'teks_jawaban' => 'wrote', 'jawaban_benar' => false, 'urutan' => 3]);
+
+        // Soal 2
+        $soal6 = SoalKuis::create([
+            'kuis_id' => $kuis3->id,
+            'pertanyaan' => 'This house ... in 1990.',
+            'jenis_soal' => 'pilihan_ganda',
+            'poin' => 20,
+            'urutan' => 2
+        ]);
+
+        PilihanJawaban::create(['soal_id' => $soal6->id, 'teks_jawaban' => 'built', 'jawaban_benar' => false, 'urutan' => 0]);
+        PilihanJawaban::create(['soal_id' => $soal6->id, 'teks_jawaban' => 'was built', 'jawaban_benar' => true, 'urutan' => 1]);
+        PilihanJawaban::create(['soal_id' => $soal6->id, 'teks_jawaban' => 'is built', 'jawaban_benar' => false, 'urutan' => 2]);
+        PilihanJawaban::create(['soal_id' => $soal6->id, 'teks_jawaban' => 'builds', 'jawaban_benar' => false, 'urutan' => 3]);
     }
 }

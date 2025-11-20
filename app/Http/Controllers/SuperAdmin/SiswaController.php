@@ -32,7 +32,7 @@ class SiswaController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'nomor_induk' => 'required|string|unique:users,nomor_induk',
-            'kelas' => 'required|string',
+            'kelas' => 'required|in:7,8',
             'no_telepon' => 'nullable|string',
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'nullable|date',
@@ -45,7 +45,8 @@ class SiswaController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak cocok',
             'nomor_induk.required' => 'NIS harus diisi',
             'nomor_induk.unique' => 'NIS sudah terdaftar',
-            'kelas.required' => 'Kelas harus diisi',
+            'kelas.required' => 'Kelas harus dipilih',
+            'kelas.in' => 'Kelas harus 7 atau 8',
             'jenis_kelamin.required' => 'Jenis kelamin harus dipilih'
         ]);
 
@@ -84,7 +85,7 @@ class SiswaController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:6|confirmed',
             'nomor_induk' => 'required|string|unique:users,nomor_induk,' . $id,
-            'kelas' => 'required|string',
+            'kelas' => 'required|in:7,8',
             'no_telepon' => 'nullable|string',
             'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'nullable|date',

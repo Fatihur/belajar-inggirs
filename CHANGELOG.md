@@ -269,6 +269,84 @@ php artisan migrate
 
 ---
 
+---
+
+## [1.3.2] - 2025-11-20 (Sistem Kelas & Seeder Lengkap) 🎓
+
+### ✅ Sistem Kelas 7 & 8
+
+#### Fitur yang Ditambahkan:
+1. **Sistem Kelas Terintegrasi**
+   - Guru memiliki `kelas_mengajar` (7 atau 8)
+   - Siswa memiliki `kelas` (7 atau 8)
+   - Materi memiliki `kelas_target` (7 atau 8)
+   - Kuis memiliki `kelas_target` (7 atau 8)
+   - Auto-filter data berdasarkan kelas
+   - Isolasi data antar kelas
+
+2. **Seeder Lengkap & Realistis**
+   - **GuruSeeder**: 4 guru (2 kelas 7, 2 kelas 8)
+   - **SiswaSeeder**: 10 siswa (5 kelas 7, 5 kelas 8)
+   - **MateriSeeder**: 10 materi + 50 kosakata
+     - Kelas 7: 6 materi (Simple Present, Present Continuous, Simple Past, Daily Activities, Family Members, Colors)
+     - Kelas 8: 4 materi (Present Perfect, Passive Voice, Technology, Environment)
+   - **KuisSeeder**: 7 kuis + 19 soal + 70 pilihan jawaban
+     - Kelas 7: 4 kuis (Simple Present, Daily Activities, Family Members, Mixed Grammar)
+     - Kelas 8: 3 kuis (Present Perfect, Technology, Passive Voice)
+   - **PercobaanKuisSeeder** ⭐ **BARU**: 26 percobaan + 96 jawaban
+     - Status: Selesai, Sedang Dikerjakan, Waktu Habis
+     - Nilai otomatis dihitung
+     - Timestamp realistis
+
+#### File yang Ditambahkan:
+- `database/seeders/PercobaanKuisSeeder.php` - Seeder percobaan kuis ⭐ **BARU**
+- `SEEDER_LENGKAP.md` - Dokumentasi lengkap seeder
+- `SEEDER_GURU_SISWA.md` - Dokumentasi guru & siswa seeder
+
+#### File yang Dimodifikasi:
+- `database/seeders/DatabaseSeeder.php` - Tambah semua seeder
+- `database/seeders/MateriSeeder.php` - Support kelas 7 & 8
+- `database/seeders/KuisSeeder.php` - Support kelas 7 & 8
+- `database/seeders/GuruSeeder.php` - Tambah kelas_mengajar
+- `database/seeders/SiswaSeeder.php` - Tambah kelas
+
+#### Migration:
+- `2025_11_20_005615_add_kelas_to_users_and_content_tables.php`
+  - Tambah `kelas_mengajar` ke users (untuk guru)
+  - Tambah `kelas_target` ke materi
+  - Tambah `kelas_target` ke kuis
+
+#### Data Seeder:
+- **17 Users**: 3 admin + 4 guru + 10 siswa
+- **10 Materi**: 6 kelas 7 + 4 kelas 8
+- **50 Kosakata**: 30 kelas 7 + 20 kelas 8
+- **7 Kuis**: 4 kelas 7 + 3 kelas 8
+- **19 Soal**: 13 kelas 7 + 6 kelas 8
+- **70 Pilihan Jawaban**: 48 kelas 7 + 22 kelas 8
+- **26 Percobaan Kuis**: ~15 kelas 7 + ~11 kelas 8
+- **96 Jawaban Siswa**: Data lengkap untuk testing
+
+#### Login Credentials:
+**Guru Kelas 7:**
+- `budi.guru@example.com` / `password123`
+- `siti.guru@example.com` / `password123`
+
+**Guru Kelas 8:**
+- `ahmad.guru@example.com` / `password123`
+- `dewi.guru@example.com` / `password123`
+
+**Siswa Kelas 7:**
+- `andi.siswa@example.com` / `password123`
+- `bella.siswa@example.com` / `password123`
+- (dan 3 lainnya)
+
+**Siswa Kelas 8:**
+- `farah.siswa@example.com` / `password123`
+- `gilang.siswa@example.com` / `password123`
+- (dan 3 lainnya)
+
+---
+
 ## 🎉 APLIKASI LENGKAP 100%
 
 Semua fitur dari PRD sudah terimplementasi:
@@ -277,4 +355,5 @@ Semua fitur dari PRD sudah terimplementasi:
 - ✅ Siswa: Akses Materi & Kerjakan Kuis
 - ✅ Upload Media (Video, Audio, Gambar)
 - ✅ Sistem Kuis Interaktif dengan Timer
-- ✅ Seeder Lengkap untuk Testing
+- ✅ Sistem Kelas 7 & 8 Terintegrasi ⭐ **BARU**
+- ✅ Seeder Lengkap untuk Testing (17 users, 10 materi, 7 kuis, 26 percobaan) ⭐ **BARU**

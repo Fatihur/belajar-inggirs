@@ -13,6 +13,7 @@ class NilaiController extends Controller
     public function index()
     {
         $guru = auth()->user();
+        $kelasGuru = $guru->kelas_mengajar;
         
         // Get all kuis created by this guru
         $kuisList = Kuis::where('dibuat_oleh', $guru->id)
@@ -20,10 +21,11 @@ class NilaiController extends Controller
             ->latest()
             ->get();
 
-        // Get all students with their quiz attempts
+        // Get students from same class only
         $siswaList = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'siswa');
         })
+        ->where('kelas', $kelasGuru)
         ->with(['percobaanKuis' => function($q) use ($guru) {
             $q->whereHas('kuis', function($query) use ($guru) {
                 $query->where('dibuat_oleh', $guru->id);

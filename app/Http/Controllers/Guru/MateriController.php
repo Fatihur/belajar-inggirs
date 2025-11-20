@@ -45,13 +45,16 @@ class MateriController extends Controller
             'video_path.max' => 'Ukuran file video maksimal 50MB'
         ]);
 
+        $guru = auth()->user();
+        
         $data = [
             'judul' => $request->judul,
             'jenis_materi' => $request->jenis_materi,
             'deskripsi' => $request->deskripsi,
             'konten' => $request->konten,
             'video_url' => $request->video_url,
-            'dibuat_oleh' => auth()->id(),
+            'dibuat_oleh' => $guru->id,
+            'kelas_target' => $guru->kelas_mengajar,
             'urutan' => $request->urutan ?? 0,
             'aktif' => $request->has('aktif')
         ];
@@ -115,12 +118,15 @@ class MateriController extends Controller
             'urutan' => 'nullable|integer'
         ]);
 
+        $guru = auth()->user();
+        
         $data = [
             'judul' => $request->judul,
             'jenis_materi' => $request->jenis_materi,
             'deskripsi' => $request->deskripsi,
             'konten' => $request->konten,
             'video_url' => $request->video_url,
+            'kelas_target' => $guru->kelas_mengajar,
             'urutan' => $request->urutan ?? 0,
             'aktif' => $request->has('aktif')
         ];

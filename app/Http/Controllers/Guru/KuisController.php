@@ -53,6 +53,8 @@ class KuisController extends Controller
             'tingkat_kesulitan.required' => 'Tingkat kesulitan harus dipilih'
         ]);
 
+        $guru = auth()->user();
+        
         $kuis = Kuis::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
@@ -60,7 +62,8 @@ class KuisController extends Controller
             'durasi_menit' => $request->durasi_menit,
             'nilai_minimal' => $request->nilai_minimal,
             'tingkat_kesulitan' => $request->tingkat_kesulitan,
-            'dibuat_oleh' => auth()->id(),
+            'dibuat_oleh' => $guru->id,
+            'kelas_target' => $guru->kelas_mengajar,
             'aktif' => $request->has('aktif'),
             'acak_soal' => $request->has('acak_soal'),
             'tampilkan_jawaban' => $request->has('tampilkan_jawaban')
@@ -119,6 +122,8 @@ class KuisController extends Controller
             'tingkat_kesulitan' => 'required|in:mudah,sedang,sulit'
         ]);
 
+        $guru = auth()->user();
+        
         $kuis->update([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
@@ -126,6 +131,7 @@ class KuisController extends Controller
             'durasi_menit' => $request->durasi_menit,
             'nilai_minimal' => $request->nilai_minimal,
             'tingkat_kesulitan' => $request->tingkat_kesulitan,
+            'kelas_target' => $guru->kelas_mengajar,
             'aktif' => $request->has('aktif'),
             'acak_soal' => $request->has('acak_soal'),
             'tampilkan_jawaban' => $request->has('tampilkan_jawaban')

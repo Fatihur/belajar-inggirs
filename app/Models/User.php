@@ -24,6 +24,7 @@ class User extends Authenticatable
         'peran_id',
         'nomor_induk',
         'kelas',
+        'kelas_mengajar',
         'alamat',
         'no_telepon',
         'jenis_kelamin',

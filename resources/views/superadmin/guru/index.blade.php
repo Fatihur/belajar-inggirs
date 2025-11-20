@@ -28,6 +28,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>NIP</th>
+                            <th>Kelas Mengajar</th>
                             <th>Jenis Kelamin</th>
                             <th>No. Telepon</th>
                             <th>Aksi</th>
@@ -40,6 +41,13 @@
                             <td>{{ $guru->name }}</td>
                             <td>{{ $guru->email }}</td>
                             <td>{{ $guru->nomor_induk }}</td>
+                            <td>
+                                @if($guru->kelas_mengajar)
+                                    <span class="badge bg-primary">Kelas {{ $guru->kelas_mengajar }}</span>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
                             <td>{{ $guru->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                             <td>{{ $guru->no_telepon ?? '-' }}</td>
                             <td>
@@ -75,7 +83,7 @@ $(document).ready(function() {
         pageLength: 10,
         lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
         columnDefs: [
-            { orderable: false, targets: 6 } // Disable sorting on action column
+            { orderable: false, targets: 7 } // Disable sorting on action column
         ]
     });
 });

@@ -51,7 +51,11 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Kelas <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="kelas" value="{{ old('kelas', $siswa->kelas) }}" required>
+                        <select class="form-select" name="kelas" required>
+                            <option value="">Pilih Kelas</option>
+                            <option value="7" {{ old('kelas', $siswa->kelas) == '7' ? 'selected' : '' }}>Kelas 7</option>
+                            <option value="8" {{ old('kelas', $siswa->kelas) == '8' ? 'selected' : '' }}>Kelas 8</option>
+                        </select>
                     </div>
                 </div>
 

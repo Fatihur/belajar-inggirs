@@ -10,7 +10,12 @@ class MateriController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Materi::where('aktif', true)->withCount('kosakata');
+        $siswa = auth()->user();
+        $kelasSiswa = $siswa->kelas;
+        
+        $query = Materi::where('aktif', true)
+            ->where('kelas_target', $kelasSiswa)
+            ->withCount('kosakata');
 
         // Search
         if ($request->filled('search')) {
