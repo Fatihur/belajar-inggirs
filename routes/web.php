@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\SuperAdmin\GuruController;
 use App\Http\Controllers\SuperAdmin\SiswaController;
@@ -32,6 +34,19 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Registration Routes
+Route::get('/register', [RegisterController::class, 'showRegisterChoice'])->name('register');
+Route::get('/register/siswa', [RegisterController::class, 'showRegisterSiswa'])->name('register.siswa');
+Route::post('/register/siswa', [RegisterController::class, 'registerSiswa'])->name('register.siswa.post');
+Route::get('/register/guru', [RegisterController::class, 'showRegisterGuru'])->name('register.guru');
+Route::post('/register/guru', [RegisterController::class, 'registerGuru'])->name('register.guru.post');
+
+// Password Reset Routes
+Route::get('/forgot-password', [PasswordResetController::class, 'showForgotForm'])->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('password.email');
+Route::get('/reset-password', [PasswordResetController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
 // Super Admin Routes
 Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'role:super_admin'])->group(function () {

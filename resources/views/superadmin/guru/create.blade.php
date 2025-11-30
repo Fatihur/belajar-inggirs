@@ -44,21 +44,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">NIP <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nomor_induk" value="{{ old('nomor_induk') }}" required>
+                        <input type="text" class="form-control" name="nip" value="{{ old('nip') }}" required>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">Kelas Mengajar <span class="text-danger">*</span></label>
                         <select class="form-select" name="kelas_mengajar" required>
                             <option value="">Pilih Kelas</option>
                             <option value="7" {{ old('kelas_mengajar') == '7' ? 'selected' : '' }}>Kelas 7</option>
                             <option value="8" {{ old('kelas_mengajar') == '8' ? 'selected' : '' }}>Kelas 8</option>
                         </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">No. Telepon</label>
-                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon') }}">
                     </div>
                 </div>
 
@@ -72,6 +68,17 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
+                        <label class="form-label">No. Telepon</label>
+                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon') }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" name="tempat_lahir" value="{{ old('tempat_lahir') }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Lahir</label>
                         <input type="date" class="form-control" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
                     </div>
@@ -79,7 +86,23 @@
 
                 <div class="mb-3">
                     <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" rows="3">{{ old('alamat') }}</textarea>
+                    <textarea class="form-control" name="alamat" rows="2">{{ old('alamat') }}</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Pendidikan Terakhir</label>
+                        <select class="form-select" name="pendidikan_terakhir">
+                            <option value="">Pilih</option>
+                            <option value="S1" {{ old('pendidikan_terakhir') == 'S1' ? 'selected' : '' }}>S1</option>
+                            <option value="S2" {{ old('pendidikan_terakhir') == 'S2' ? 'selected' : '' }}>S2</option>
+                            <option value="S3" {{ old('pendidikan_terakhir') == 'S3' ? 'selected' : '' }}>S3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Bidang Studi</label>
+                        <input type="text" class="form-control" name="bidang_studi" value="{{ old('bidang_studi') }}" placeholder="Bahasa Inggris">
+                    </div>
                 </div>
 
                 <div class="d-flex gap-2">

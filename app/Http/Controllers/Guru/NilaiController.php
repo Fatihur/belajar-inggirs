@@ -25,8 +25,10 @@ class NilaiController extends Controller
         $siswaList = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'siswa');
         })
-        ->where('kelas', $kelasGuru)
-        ->with(['percobaanKuis' => function($q) use ($guru) {
+        ->whereHas('siswa', function($q) use ($kelasGuru) {
+            $q->where('kelas', $kelasGuru);
+        })
+        ->with(['siswa', 'percobaanKuis' => function($q) use ($guru) {
             $q->whereHas('kuis', function($query) use ($guru) {
                 $query->where('dibuat_oleh', $guru->id);
             })

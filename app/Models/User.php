@@ -22,13 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'peran_id',
-        'nomor_induk',
-        'kelas',
-        'kelas_mengajar',
-        'alamat',
-        'no_telepon',
-        'jenis_kelamin',
-        'tanggal_lahir'
     ];
 
     /**
@@ -51,7 +44,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'tanggal_lahir' => 'date'
         ];
     }
 
@@ -75,6 +67,16 @@ class User extends Authenticatable
         return $this->hasMany(PercobaanKuis::class, 'siswa_id');
     }
 
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class);
+    }
+
+    public function guru()
+    {
+        return $this->hasOne(Guru::class);
+    }
+
     // Helper methods
     public function isSuperAdmin()
     {
@@ -89,5 +91,29 @@ class User extends Authenticatable
     public function isSiswa()
     {
         return $this->peran->nama_peran === 'siswa';
+    }
+
+    // Accessor untuk mendapatkan kelas siswa
+    public function getKelasAttribute()
+    {
+        return $this->siswa?->kelas;
+    }
+
+    // Accessor untuk mendapatkan kelas mengajar guru
+    public function getKelasMengajarAttribute()
+    {
+        return $this->guru?->kelas_mengajar;
+    }
+
+    // Accessor untuk mendapatkan nomor induk (NIS/NIP)
+    public function getNomorIndukAttribute()
+    {
+        if ($this->isSiswa()) {
+            return $this->siswa?->nis;
+        }
+        if ($this->isGuru()) {
+            return $this->guru?->nip;
+        }
+        return null;
     }
 }

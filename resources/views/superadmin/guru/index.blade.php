@@ -40,16 +40,16 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $guru->name }}</td>
                             <td>{{ $guru->email }}</td>
-                            <td>{{ $guru->nomor_induk }}</td>
+                            <td>{{ $guru->guru?->nip }}</td>
                             <td>
-                                @if($guru->kelas_mengajar)
-                                    <span class="badge bg-primary">Kelas {{ $guru->kelas_mengajar }}</span>
+                                @if($guru->guru?->kelas_mengajar)
+                                    <span class="badge bg-primary">Kelas {{ $guru->guru->kelas_mengajar }}</span>
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
                             </td>
-                            <td>{{ $guru->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-                            <td>{{ $guru->no_telepon ?? '-' }}</td>
+                            <td>{{ $guru->guru?->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                            <td>{{ $guru->guru?->no_telepon ?? '-' }}</td>
                             <td>
                                 <a href="{{ route('superadmin.guru.edit', $guru->id) }}" class="btn btn-sm btn-warning">
                                     <i class="ti ti-edit"></i>

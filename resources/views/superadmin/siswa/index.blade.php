@@ -39,9 +39,9 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $siswa->name }}</td>
                             <td>{{ $siswa->email }}</td>
-                            <td>{{ $siswa->nomor_induk }}</td>
-                            <td>{{ $siswa->kelas }}</td>
-                            <td>{{ $siswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                            <td>{{ $siswa->siswa?->nis }}</td>
+                            <td>{{ $siswa->siswa?->kelas }}</td>
+                            <td>{{ $siswa->siswa?->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                             <td>
                                 <a href="{{ route('superadmin.siswa.edit', $siswa->id) }}" class="btn btn-sm btn-warning">
                                     <i class="ti ti-edit"></i>

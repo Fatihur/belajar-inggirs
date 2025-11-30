@@ -47,43 +47,58 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">NIS <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nomor_induk" value="{{ old('nomor_induk', $siswa->nomor_induk) }}" required>
+                        <input type="text" class="form-control" name="nis" value="{{ old('nis', $siswa->siswa?->nis) }}" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Kelas <span class="text-danger">*</span></label>
                         <select class="form-select" name="kelas" required>
                             <option value="">Pilih Kelas</option>
-                            <option value="7" {{ old('kelas', $siswa->kelas) == '7' ? 'selected' : '' }}>Kelas 7</option>
-                            <option value="8" {{ old('kelas', $siswa->kelas) == '8' ? 'selected' : '' }}>Kelas 8</option>
+                            <option value="7" {{ old('kelas', $siswa->siswa?->kelas) == '7' ? 'selected' : '' }}>Kelas 7</option>
+                            <option value="8" {{ old('kelas', $siswa->siswa?->kelas) == '8' ? 'selected' : '' }}>Kelas 8</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">No. Telepon</label>
-                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon', $siswa->no_telepon) }}">
-                    </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select class="form-select" name="jenis_kelamin" required>
                             <option value="">Pilih Jenis Kelamin</option>
-                            <option value="L" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="P" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="L" {{ old('jenis_kelamin', $siswa->siswa?->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="P" {{ old('jenis_kelamin', $siswa->siswa?->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
                         </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">No. Telepon</label>
+                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon', $siswa->siswa?->no_telepon) }}">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
+                        <label class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" name="tempat_lahir" value="{{ old('tempat_lahir', $siswa->siswa?->tempat_lahir) }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" name="tanggal_lahir" value="{{ old('tanggal_lahir', $siswa->tanggal_lahir?->format('Y-m-d')) }}">
+                        <input type="date" class="form-control" name="tanggal_lahir" value="{{ old('tanggal_lahir', $siswa->siswa?->tanggal_lahir?->format('Y-m-d')) }}">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" rows="3">{{ old('alamat', $siswa->alamat) }}</textarea>
+                    <textarea class="form-control" name="alamat" rows="2">{{ old('alamat', $siswa->siswa?->alamat) }}</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nama Orang Tua</label>
+                        <input type="text" class="form-control" name="nama_orang_tua" value="{{ old('nama_orang_tua', $siswa->siswa?->nama_orang_tua) }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">No. Telepon Orang Tua</label>
+                        <input type="text" class="form-control" name="no_telepon_orang_tua" value="{{ old('no_telepon_orang_tua', $siswa->siswa?->no_telepon_orang_tua) }}">
+                    </div>
                 </div>
 
                 <div class="d-flex gap-2">

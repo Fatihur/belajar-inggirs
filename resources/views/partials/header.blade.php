@@ -21,10 +21,7 @@
                 <h6 class="mb-0">{{ auth()->user()->name }}</h6>
                 <small class="text-muted">{{ auth()->user()->peran->deskripsi }}</small>
               </div>
-              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                <i class="ti ti-user fs-6"></i>
-                <p class="mb-0 fs-3">Profil Saya</p>
-              </a>
+            
               <form action="{{ route('logout') }}" method="POST" class="px-3 mt-2">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary w-100">

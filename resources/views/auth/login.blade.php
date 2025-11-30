@@ -75,7 +75,7 @@
                                     Ingat Saya
                                 </label>
                             </div>
-                            <a href="#" class="text-decoration-none small">Lupa password?</a>
+                            <a href="{{ route('password.request') }}" class="text-decoration-none small">Lupa password?</a>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 py-3 fs-5 rounded-3">
                             Login
@@ -83,7 +83,7 @@
                     </form>
 
                     
-                    <p class="text-center text-muted small mb-0">Belum punya akses? Hubungi administrator sekolah Anda.</p>
+                    <p class="text-center text-muted small mb-0">Belum punya akun? <a href="{{ route('register') }}" class="text-primary fw-semibold">Daftar sekarang</a></p>
                 </div>
             </div>
         </div>

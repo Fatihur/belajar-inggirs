@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">NIS <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nomor_induk" value="{{ old('nomor_induk') }}" required>
+                        <input type="text" class="form-control" name="nis" value="{{ old('nis') }}" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Kelas <span class="text-danger">*</span></label>
@@ -60,10 +60,6 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">No. Telepon</label>
-                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon') }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select class="form-select" name="jenis_kelamin" required>
                             <option value="">Pilih Jenis Kelamin</option>
@@ -71,9 +67,17 @@
                             <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                         </select>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">No. Telepon</label>
+                        <input type="text" class="form-control" name="no_telepon" value="{{ old('no_telepon') }}">
+                    </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" name="tempat_lahir" value="{{ old('tempat_lahir') }}">
+                    </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Lahir</label>
                         <input type="date" class="form-control" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
@@ -82,7 +86,18 @@
 
                 <div class="mb-3">
                     <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" rows="3">{{ old('alamat') }}</textarea>
+                    <textarea class="form-control" name="alamat" rows="2">{{ old('alamat') }}</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nama Orang Tua</label>
+                        <input type="text" class="form-control" name="nama_orang_tua" value="{{ old('nama_orang_tua') }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">No. Telepon Orang Tua</label>
+                        <input type="text" class="form-control" name="no_telepon_orang_tua" value="{{ old('no_telepon_orang_tua') }}">
+                    </div>
                 </div>
 
                 <div class="d-flex gap-2">
