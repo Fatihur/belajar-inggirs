@@ -60,7 +60,10 @@ class RegisterController extends Controller
         try {
             DB::beginTransaction();
 
-            $peranSiswa = Peran::where('nama_peran', 'siswa')->first();
+            $peranSiswa = Peran::firstOrCreate(
+                ['nama_peran' => 'siswa'],
+                ['deskripsi' => 'Siswa yang mengakses materi dan mengerjakan kuis']
+            );
 
             $user = User::create([
                 'name' => $request->nama_lengkap,
@@ -127,7 +130,10 @@ class RegisterController extends Controller
         try {
             DB::beginTransaction();
 
-            $peranGuru = Peran::where('nama_peran', 'guru')->first();
+            $peranGuru = Peran::firstOrCreate(
+                ['nama_peran' => 'guru'],
+                ['deskripsi' => 'Guru yang mengelola materi dan kuis']
+            );
 
             $user = User::create([
                 'name' => $request->nama_lengkap,

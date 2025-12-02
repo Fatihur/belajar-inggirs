@@ -14,6 +14,7 @@ use App\Http\Controllers\Guru\NilaiController as GuruNilai;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateri;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuis;
+use App\Http\Controllers\Siswa\NilaiController as SiswaNilai;
 
 // Redirect root ke login
 Route::get('/', function () {
@@ -95,4 +96,7 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'role:siswa'])->grou
     Route::get('/kuis/mengerjakan/{percobaanId}', [SiswaKuis::class, 'mengerjakan'])->name('kuis.mengerjakan');
     Route::post('/kuis/submit/{percobaanId}', [SiswaKuis::class, 'submit'])->name('kuis.submit');
     Route::get('/kuis/hasil/{percobaanId}', [SiswaKuis::class, 'hasil'])->name('kuis.hasil');
+    
+    // Nilai
+    Route::get('/nilai', [SiswaNilai::class, 'index'])->name('nilai.index');
 });

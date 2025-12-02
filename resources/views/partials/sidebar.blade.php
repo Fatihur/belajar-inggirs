@@ -94,6 +94,12 @@
               <span class="hide-menu">Kuis</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ route('siswa.nilai.index') }}" aria-expanded="false">
+              <span><i class="ti ti-report-analytics"></i></span>
+              <span class="hide-menu">Nilai</span>
+            </a>
+          </li>
         @endif
 
       </ul>

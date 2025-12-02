@@ -47,7 +47,7 @@
 
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label for="nip" class="form-label">NIP <span class="text-danger">*</span></label>
+                    <label for="nip" class="form-label">NIP / NUPTK<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="nip" name="nip" value="{{ old('nip') }}" required>
                 </div>
                 <div class="col-md-4 mb-3">

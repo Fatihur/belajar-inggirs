@@ -1,0 +1,208 @@
+@startuml Belajar_Inggris_ERD
+
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+
+' Styling
+skinparam linetype ortho
+skinparam roundcorner 5
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+' Tables
+table(peran) {
+    primary_key(id): BIGINT
+    --
+    column(nama_peran): VARCHAR
+    column(deskripsi): VARCHAR
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(users) {
+    primary_key(id): BIGINT
+    --
+    column(name): VARCHAR
+    column(email): VARCHAR <<UK>>
+    column(password): VARCHAR
+    foreign_key(peran_id): BIGINT
+    column(nomor_induk): VARCHAR
+    column(kelas): VARCHAR
+    column(kelas_mengajar): VARCHAR
+    column(alamat): TEXT
+    column(no_telepon): VARCHAR
+    column(jenis_kelamin): ENUM
+    column(tanggal_lahir): DATE
+    column(email_verified_at): TIMESTAMP
+    column(remember_token): VARCHAR
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(materi) {
+    primary_key(id): BIGINT
+    --
+    column(judul): VARCHAR
+    column(jenis_materi): ENUM
+    column(deskripsi): TEXT
+    column(konten): TEXT
+    column(video_url): VARCHAR
+    column(video_path): VARCHAR
+    foreign_key(dibuat_oleh): BIGINT
+    column(kelas_target): VARCHAR
+    column(urutan): INT
+    column(aktif): BOOLEAN
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(kosakata) {
+    primary_key(id): BIGINT
+    --
+    foreign_key(materi_id): BIGINT
+    column(kata_inggris): VARCHAR
+    column(kata_indonesia): VARCHAR
+    column(jenis_kata): VARCHAR
+    column(contoh_kalimat): TEXT
+    column(audio_path): VARCHAR
+    column(gambar_path): VARCHAR
+    column(urutan): INT
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(kuis) {
+    primary_key(id): BIGINT
+    --
+    column(judul): VARCHAR
+    column(deskripsi): TEXT
+    foreign_key(materi_id): BIGINT
+    column(durasi_menit): INT
+    column(nilai_minimal): INT
+    column(tingkat_kesulitan): ENUM
+    foreign_key(dibuat_oleh): BIGINT
+    column(kelas_target): VARCHAR
+    column(aktif): BOOLEAN
+    column(acak_soal): BOOLEAN
+    column(tampilkan_jawaban): BOOLEAN
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(soal_kuis) {
+    primary_key(id): BIGINT
+    --
+    foreign_key(kuis_id): BIGINT
+    column(pertanyaan): TEXT
+    column(jenis_soal): ENUM
+    column(gambar_path): VARCHAR
+    column(audio_path): VARCHAR
+    column(poin): INT
+    column(urutan): INT
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(pilihan_jawaban) {
+    primary_key(id): BIGINT
+    --
+    foreign_key(soal_id): BIGINT
+    column(teks_jawaban): TEXT
+    column(jawaban_benar): BOOLEAN
+    column(urutan): INT
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(percobaan_kuis) {
+    primary_key(id): BIGINT
+    --
+    foreign_key(kuis_id): BIGINT
+    foreign_key(siswa_id): BIGINT
+    column(waktu_mulai): TIMESTAMP
+    column(waktu_selesai): TIMESTAMP
+    column(nilai): INT
+    column(jumlah_benar): INT
+    column(jumlah_salah): INT
+    column(total_soal): INT
+    column(status): ENUM
+    column(lulus): BOOLEAN
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+table(jawaban_siswa) {
+    primary_key(id): BIGINT
+    --
+    foreign_key(percobaan_id): BIGINT
+    foreign_key(soal_id): BIGINT
+    foreign_key(pilihan_jawaban_id): BIGINT
+    column(jawaban_isian): TEXT
+    column(benar): BOOLEAN
+    column(poin_didapat): INT
+    column(created_at): TIMESTAMP
+    column(updated_at): TIMESTAMP
+}
+
+' Relationships
+peran ||--o{ users : "has"
+users ||--o{ materi : "creates (guru)"
+users ||--o{ kuis : "creates (guru)"
+users ||--o{ percobaan_kuis : "attempts (siswa)"
+materi ||--o{ kosakata : "contains"
+materi ||--o{ kuis : "relates to"
+kuis ||--o{ soal_kuis : "has"
+kuis ||--o{ percobaan_kuis : "attempted in"
+soal_kuis ||--o{ pilihan_jawaban : "has"
+soal_kuis ||--o{ jawaban_siswa : "answered in"
+pilihan_jawaban ||--o{ jawaban_siswa : "selected in"
+percobaan_kuis ||--o{ jawaban_siswa : "contains"
+
+' Notes
+note right of users
+  **User Types:**
+  - Super Admin (peran_id=1)
+  - Guru (peran_id=2)
+    * kelas_mengajar: 7 or 8
+  - Siswa (peran_id=3)
+    * kelas: 7 or 8
+end note
+
+note right of materi
+  **Material Types:**
+  - Grammar (with konten & video)
+  - Vocabulary (with kosakata)
+  
+  **Class Target:**
+  - kelas_target: 7 or 8
+end note
+
+note right of kuis
+  **Quiz Settings:**
+  - durasi_menit: time limit
+  - nilai_minimal: passing score
+  - tingkat_kesulitan:
+    * mudah, sedang, sulit
+  - kelas_target: 7 or 8
+end note
+
+note right of soal_kuis
+  **Question Types:**
+  - pilihan_ganda
+  - benar_salah
+  - isian
+end note
+
+note right of percobaan_kuis
+  **Attempt Status:**
+  - sedang_dikerjakan
+  - selesai
+  - waktu_habis
+end note
+
+@enduml
