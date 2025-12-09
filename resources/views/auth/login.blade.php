@@ -69,12 +69,7 @@
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                                <label class="form-check-label" for="remember">
-                                    Ingat Saya
-                                </label>
-                            </div>
+
                             <a href="{{ route('password.request') }}" class="text-decoration-none small">Lupa password?</a>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 py-3 fs-5 rounded-3">
