@@ -17,15 +17,15 @@ class PeranSeeder extends Seeder
             'deskripsi' => 'Super Administrator dengan akses penuh'
         ]);
 
-        // $guru = Peran::create([
-        //     'nama_peran' => 'guru',
-        //     'deskripsi' => 'Guru yang mengelola materi dan kuis'
-        // ]);
+        Peran::create([
+            'nama_peran' => 'guru',
+            'deskripsi' => 'Guru yang mengelola materi dan kuis'
+        ]);
 
-        // $siswa = Peran::create([
-        //     'nama_peran' => 'siswa',
-        //     'deskripsi' => 'Siswa yang mengakses materi dan mengerjakan kuis'
-        // ]);
+        Peran::create([
+            'nama_peran' => 'siswa',
+            'deskripsi' => 'Siswa yang mengakses materi dan mengerjakan kuis'
+        ]);
 
         // Buat user default
         User::create([

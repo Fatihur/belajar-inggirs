@@ -15,13 +15,13 @@ class PercobaanKuisSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ambil siswa kelas 7 dan 8
+        // Ambil siswa kelas 7 dan 8 melalui relasi tabel siswa
         $siswaKelas7 = User::whereHas('peran', fn($q) => $q->where('nama_peran', 'siswa'))
-            ->where('kelas', '7')
+            ->whereHas('siswa', fn($q) => $q->where('kelas', '7'))
             ->get();
         
         $siswaKelas8 = User::whereHas('peran', fn($q) => $q->where('nama_peran', 'siswa'))
-            ->where('kelas', '8')
+            ->whereHas('siswa', fn($q) => $q->where('kelas', '8'))
             ->get();
 
         // Ambil kuis

@@ -13,14 +13,18 @@ class KuisSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ambil guru kelas 7 dan 8
+        // Ambil guru kelas 7 dan 8 melalui relasi tabel guru
         $guruKelas7 = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'guru');
-        })->where('kelas_mengajar', '7')->first();
+        })->whereHas('guru', function($q) {
+            $q->where('kelas_mengajar', '7');
+        })->first();
 
         $guruKelas8 = User::whereHas('peran', function($q) {
             $q->where('nama_peran', 'guru');
-        })->where('kelas_mengajar', '8')->first();
+        })->whereHas('guru', function($q) {
+            $q->where('kelas_mengajar', '8');
+        })->first();
 
         if (!$guruKelas7 || !$guruKelas8) {
             $this->command->warn('⚠️  Guru belum ada. Jalankan GuruSeeder terlebih dahulu.');
