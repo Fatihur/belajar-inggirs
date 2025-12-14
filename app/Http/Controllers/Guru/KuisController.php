@@ -174,15 +174,32 @@ class KuisController extends Controller
             abort(403, 'Anda tidak memiliki akses ke kuis ini');
         }
 
-        $request->validate([
+        $rules = [
             'pertanyaan' => 'required|string',
             'jenis_soal' => 'required|in:pilihan_ganda,benar_salah,isian',
             'gambar_path' => 'nullable|image|max:2048',
             'audio_path' => 'nullable|file|mimes:mp3,wav|max:5120',
             'poin' => 'required|integer|min:1',
             'urutan' => 'nullable|integer',
-            'pilihan.*' => 'required_if:jenis_soal,pilihan_ganda,benar_salah',
-            'jawaban_benar' => 'required_if:jenis_soal,pilihan_ganda,benar_salah'
+        ];
+
+        // Validasi berdasarkan jenis soal
+        if ($request->jenis_soal === 'pilihan_ganda') {
+            $rules['pilihan_ganda'] = 'required|array|min:2';
+            $rules['pilihan_ganda.*'] = 'required|string';
+            $rules['jawaban_benar_ganda'] = 'required|integer|min:0|max:3';
+        } elseif ($request->jenis_soal === 'benar_salah') {
+            $rules['jawaban_benar_salah'] = 'required|integer|in:0,1';
+        }
+
+        $request->validate($rules, [
+            'pertanyaan.required' => 'Pertanyaan harus diisi',
+            'jenis_soal.required' => 'Jenis soal harus dipilih',
+            'poin.required' => 'Poin harus diisi',
+            'pilihan_ganda.required' => 'Pilihan jawaban harus diisi',
+            'pilihan_ganda.*.required' => 'Semua pilihan jawaban harus diisi',
+            'jawaban_benar_ganda.required' => 'Jawaban benar harus dipilih',
+            'jawaban_benar_salah.required' => 'Jawaban benar harus dipilih',
         ]);
 
         $data = [
@@ -207,18 +224,32 @@ class KuisController extends Controller
 
         $soal = SoalKuis::create($data);
 
-        // Tambahkan pilihan jawaban jika pilihan ganda atau benar salah
-        if (in_array($request->jenis_soal, ['pilihan_ganda', 'benar_salah'])) {
-            foreach ($request->pilihan as $index => $teks) {
+        // Tambahkan pilihan jawaban berdasarkan jenis soal
+        if ($request->jenis_soal === 'pilihan_ganda') {
+            foreach ($request->pilihan_ganda as $index => $teks) {
                 if (!empty($teks)) {
                     PilihanJawaban::create([
                         'soal_id' => $soal->id,
                         'teks_jawaban' => $teks,
-                        'jawaban_benar' => ($index == $request->jawaban_benar),
+                        'jawaban_benar' => ($index == $request->jawaban_benar_ganda),
                         'urutan' => $index
                     ]);
                 }
             }
+        } elseif ($request->jenis_soal === 'benar_salah') {
+            // Untuk benar/salah, buat 2 pilihan: Benar dan Salah
+            PilihanJawaban::create([
+                'soal_id' => $soal->id,
+                'teks_jawaban' => 'Benar',
+                'jawaban_benar' => ($request->jawaban_benar_salah == 0),
+                'urutan' => 0
+            ]);
+            PilihanJawaban::create([
+                'soal_id' => $soal->id,
+                'teks_jawaban' => 'Salah',
+                'jawaban_benar' => ($request->jawaban_benar_salah == 1),
+                'urutan' => 1
+            ]);
         }
 
         return redirect()->route('guru.kuis.show', $kuisId)

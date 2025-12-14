@@ -185,46 +185,48 @@
                         </div>
                     </div>
 
-                    <!-- Pilihan Jawaban (untuk pilihan ganda dan benar/salah) -->
-                    <div id="pilihan-container" style="display: none;">
+                    <!-- Pilihan Jawaban (untuk pilihan ganda) -->
+                    <div id="pilihan-ganda-container" style="display: none;">
                         <hr>
                         <h6 class="mb-3">Pilihan Jawaban</h6>
-                        <div id="pilihan-ganda-container">
-                            <div class="mb-3">
-                                <label class="form-label">A.</label>
-                                <input type="text" class="form-control" name="pilihan[]" placeholder="Pilihan A">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">B.</label>
-                                <input type="text" class="form-control" name="pilihan[]" placeholder="Pilihan B">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">C.</label>
-                                <input type="text" class="form-control" name="pilihan[]" placeholder="Pilihan C">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">D.</label>
-                                <input type="text" class="form-control" name="pilihan[]" placeholder="Pilihan D">
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label">A.</label>
+                            <input type="text" class="form-control pilihan-ganda-input" name="pilihan_ganda[]" placeholder="Pilihan A">
                         </div>
-                        <div id="benar-salah-container" style="display: none;">
-                            <div class="mb-3">
-                                <label class="form-label">A.</label>
-                                <input type="text" class="form-control" name="pilihan[]" value="Benar" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">B.</label>
-                                <input type="text" class="form-control" name="pilihan[]" value="Salah" readonly>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label">B.</label>
+                            <input type="text" class="form-control pilihan-ganda-input" name="pilihan_ganda[]" placeholder="Pilihan B">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">C.</label>
+                            <input type="text" class="form-control pilihan-ganda-input" name="pilihan_ganda[]" placeholder="Pilihan C">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">D.</label>
+                            <input type="text" class="form-control pilihan-ganda-input" name="pilihan_ganda[]" placeholder="Pilihan D">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jawaban Benar <span class="text-danger">*</span></label>
-                            <select class="form-select" name="jawaban_benar" id="jawaban_benar">
+                            <select class="form-select" name="jawaban_benar_ganda" id="jawaban_benar_ganda">
                                 <option value="">Pilih Jawaban Benar</option>
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
                                 <option value="3">D</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Jawaban (untuk benar/salah) -->
+                    <div id="benar-salah-container" style="display: none;">
+                        <hr>
+                        <h6 class="mb-3">Pilihan Jawaban</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Jawaban Benar <span class="text-danger">*</span></label>
+                            <select class="form-select" name="jawaban_benar_salah" id="jawaban_benar_salah">
+                                <option value="">Pilih Jawaban Benar</option>
+                                <option value="0">Benar</option>
+                                <option value="1">Salah</option>
                             </select>
                         </div>
                     </div>
@@ -243,51 +245,45 @@
 @push('scripts')
 <script>
 document.getElementById('jenis_soal').addEventListener('change', function() {
-    const pilihanContainer = document.getElementById('pilihan-container');
     const pilihanGanda = document.getElementById('pilihan-ganda-container');
     const benarSalah = document.getElementById('benar-salah-container');
-    const jawabanBenar = document.getElementById('jawaban_benar');
+    const jawabanBenarGanda = document.getElementById('jawaban_benar_ganda');
+    const jawabanBenarSalah = document.getElementById('jawaban_benar_salah');
+    
+    // Reset semua
+    pilihanGanda.style.display = 'none';
+    benarSalah.style.display = 'none';
+    
+    // Disable semua input
+    pilihanGanda.querySelectorAll('input, select').forEach(el => {
+        el.disabled = true;
+        el.required = false;
+    });
+    benarSalah.querySelectorAll('select').forEach(el => {
+        el.disabled = true;
+        el.required = false;
+    });
     
     if (this.value === 'pilihan_ganda') {
-        pilihanContainer.style.display = 'block';
         pilihanGanda.style.display = 'block';
-        benarSalah.style.display = 'none';
-        
-        // Reset options
-        jawabanBenar.innerHTML = `
-            <option value="">Pilih Jawaban Benar</option>
-            <option value="0">A</option>
-            <option value="1">B</option>
-            <option value="2">C</option>
-            <option value="3">D</option>
-        `;
-        
-        // Set required
-        pilihanGanda.querySelectorAll('input').forEach(input => input.required = true);
-        benarSalah.querySelectorAll('input').forEach(input => input.required = false);
-        jawabanBenar.required = true;
+        pilihanGanda.querySelectorAll('.pilihan-ganda-input').forEach(input => {
+            input.disabled = false;
+            input.required = true;
+        });
+        jawabanBenarGanda.disabled = false;
+        jawabanBenarGanda.required = true;
     } else if (this.value === 'benar_salah') {
-        pilihanContainer.style.display = 'block';
-        pilihanGanda.style.display = 'none';
         benarSalah.style.display = 'block';
-        
-        // Reset options
-        jawabanBenar.innerHTML = `
-            <option value="">Pilih Jawaban Benar</option>
-            <option value="0">Benar</option>
-            <option value="1">Salah</option>
-        `;
-        
-        // Set required
-        pilihanGanda.querySelectorAll('input').forEach(input => input.required = false);
-        benarSalah.querySelectorAll('input').forEach(input => input.required = true);
-        jawabanBenar.required = true;
-    } else {
-        pilihanContainer.style.display = 'none';
-        pilihanGanda.querySelectorAll('input').forEach(input => input.required = false);
-        benarSalah.querySelectorAll('input').forEach(input => input.required = false);
-        jawabanBenar.required = false;
+        jawabanBenarSalah.disabled = false;
+        jawabanBenarSalah.required = true;
     }
+});
+
+// Reset form saat modal ditutup
+document.getElementById('addSoalModal').addEventListener('hidden.bs.modal', function () {
+    document.getElementById('formSoal').reset();
+    document.getElementById('pilihan-ganda-container').style.display = 'none';
+    document.getElementById('benar-salah-container').style.display = 'none';
 });
 </script>
 @endpush

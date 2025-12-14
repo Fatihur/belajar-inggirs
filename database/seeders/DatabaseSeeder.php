@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             PeranSeeder::class,
             GuruSeeder::class,
             SiswaSeeder::class,
-            // MateriSeeder::class,
-            // KuisSeeder::class,
-            // PercobaanKuisSeeder::class,
+            MateriSeeder::class,
+            KuisSeeder::class,
+            PercobaanKuisSeeder::class,
         ]);
     }
 }
