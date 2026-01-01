@@ -37,11 +37,21 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', 'eyeIcon1')">
+                            <i class="ti ti-eye" id="eyeIcon1"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="password_confirmation" class="form-label">Konfirmasi Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password_confirmation', 'eyeIcon2')">
+                            <i class="ti ti-eye" id="eyeIcon2"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -111,3 +121,22 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('ti-eye');
+        icon.classList.add('ti-eye-off');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('ti-eye-off');
+        icon.classList.add('ti-eye');
+    }
+}
+</script>
+@endpush

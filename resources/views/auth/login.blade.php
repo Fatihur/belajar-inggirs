@@ -7,6 +7,7 @@
     <title>Login - {{config('app.name')}}</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
 
 <body>
@@ -66,7 +67,12 @@
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="ti ti-eye" id="eyeIcon"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
 
@@ -85,6 +91,22 @@
     </div>
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.classList.remove('ti-eye');
+                eyeIcon.classList.add('ti-eye-off');
+            } else {
+                password.type = 'password';
+                eyeIcon.classList.remove('ti-eye-off');
+                eyeIcon.classList.add('ti-eye');
+            }
+        });
+    </script>
     <style>
         .split-login-container {
             min-height: 100vh;

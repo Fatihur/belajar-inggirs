@@ -36,11 +36,21 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Password <small class="text-muted">(Kosongkan jika tidak ingin mengubah)</small></label>
-                        <input type="password" class="form-control" name="password">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="password" id="password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', 'eyeIcon1')">
+                                <i class="ti ti-eye" id="eyeIcon1"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Konfirmasi Password</label>
-                        <input type="password" class="form-control" name="password_confirmation">
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password_confirmation', 'eyeIcon2')">
+                                <i class="ti ti-eye" id="eyeIcon2"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -114,3 +124,22 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('ti-eye');
+        icon.classList.add('ti-eye-off');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('ti-eye-off');
+        icon.classList.add('ti-eye');
+    }
+}
+</script>
+@endpush
