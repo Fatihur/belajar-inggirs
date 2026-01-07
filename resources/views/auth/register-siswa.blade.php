@@ -130,12 +130,10 @@ function togglePassword(inputId, iconId) {
     
     if (input.type === 'password') {
         input.type = 'text';
-        icon.classList.remove('ti-eye');
-        icon.classList.add('ti-eye-off');
+        icon.className = 'ti ti-eye-off';
     } else {
         input.type = 'password';
-        icon.classList.remove('ti-eye-off');
-        icon.classList.add('ti-eye');
+        icon.className = 'ti ti-eye';
     }
 }
 </script>
